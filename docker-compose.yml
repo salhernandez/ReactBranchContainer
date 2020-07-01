@@ -7,6 +7,7 @@ services:
       dockerfile: .Dockerfile
       args:
         SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}
+        BRANCH_NAME: ${BRANCH_NAME}
     stdin_open: true
     ports:
       - 3001:3000
