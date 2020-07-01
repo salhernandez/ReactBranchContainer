@@ -6,6 +6,8 @@ services:
     build:
       context: ./
       dockerfile: .Dockerfile
+      args:
+        SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}
     stdin_open: true
     ports:
       - 3001:3000
