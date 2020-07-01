@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  test_0:
+    container_name: test_0
+    build:
+      context: ./
+      dockerfile: .Dockerfile
+    stdin_open: true
+    ports:
+      - 3001:3000
