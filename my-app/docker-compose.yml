@@ -1,0 +1,16 @@
+version: '3'
+ 
+services:
+  dev:
+    build:
+      context: .
+    ports:
+      - 4680:3000
+    command: npm start
+
+test:
+    build:
+        context: .
+    environment:
+        - CI=true
+    command: npm test
