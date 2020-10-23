@@ -4,7 +4,7 @@ FROM node:12.16.1
 ARG SSH_PRIVATE_KEY
 ARG BRANCH_NAME
 
-# RUN echo $BRANCH_NAME
+# Set working directory
 WORKDIR /app
 
 # setup SSH
@@ -18,7 +18,11 @@ RUN chmod 0600 ~/.ssh/id_rsa
 # Clone repository via SSH
 RUN git clone git@github.com:salhernandez/test-react.git
 
+# Remove SSH KEY
+RUN rm -rf ~/.ssh/
 
+# Set working directory
+# Replace test-react with your project's folder
 WORKDIR /app/test-react
 
 # get all branches from remote
