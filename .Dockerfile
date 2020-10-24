@@ -5,12 +5,12 @@ ARG SSH_PRIVATE_KEY=0
 ARG BRANCH_NAME=0
 ARG REPOSITORY_URL=0
 ARG PROJECT_NAME=0
+ARG REACT_CONTAINER_PORT=1000
 ARG BASE_WORKDIR="/app"
 ARG PROJECT_WORKDIR="${BASE_WORKDIR}/${PROJECT_NAME}"
 
 # Set working directory
 WORKDIR "${BASE_WORKDIR}"
-RUN pwd
 
 # Setup SSH
 RUN mkdir ~/.ssh/
@@ -25,7 +25,6 @@ RUN git clone "${REPOSITORY_URL}"
 
 # Set working directory again, now we're inside the react project itself
 WORKDIR "${PROJECT_WORKDIR}"
-RUN pwd
 
 # Get all branches from remote
 RUN git fetch
@@ -41,7 +40,7 @@ RUN npm install react-scripts
 RUN rm -rf ~/.ssh/
 
 # Expose port which is used by the actual application
-EXPOSE 3000
+EXPOSE $REACT_CONTAINER_PORT
 
 # Finally runs the application
 CMD [ "npm", "start" ]

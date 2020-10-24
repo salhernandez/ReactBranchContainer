@@ -1,15 +1,15 @@
 #!/bin/bash
 
+# Project Information
 REPOSITORY_URL="git@github.com:salhernandez/test-react.git"
 PROJECT_NAME="test-react"
 BRANCH_NAME="develop"
+REACT_CONTAINER_PORT=3000
+LOCAL_PORT=5000
 
 # path to SSH RSA KEY
 ID_RSA_PATH="/c/Users/Sal/.ssh/id_rsa_hernandezgsal"
 BUILD_CACHE="--no-cache"
-
-REACT_CONTAINER_PORT=3000
-LOCAL_PORT=5000
 
 # ./run.sh -b <branch_name> 
 while getopts "b:" arg; do
@@ -22,9 +22,9 @@ IMAGE_NAME="${PROJECT_NAME}/${BRANCH_NAME}:latest"
 
 # export variable so that it can be accessed by docker-compose
 export IMAGE_NAME=$IMAGE_NAME
-export REACT_CONTAINER_PORT=$REACT_CONTAINER_PORT
-export LOCAL_PORT=$LOCAL_PORT
 
+echo "*****************************"
+echo "--VARIABLES"
 echo "*****************************"
 echo Repository: $REPOSITORY_URL
 echo Project: $PROJECT_NAME
@@ -33,16 +33,32 @@ echo React Container Port: $REACT_CONTAINER_PORT
 echo Branch: $BRANCH_NAME
 echo Image to be created: $IMAGE_NAME
 echo Path to RSA KEY: $ID_RSA_PATH
+
+
+echo "*****************************"
+echo "--START BUILD"
 echo "*****************************"
 
 # Build container
 docker-compose build \
 $BUILD_CACHE \
 --build-arg BRANCH_NAME=$BRANCH_NAME \
---build-arg REPOSITORY_URL=$REPOSITORY_URL \
 --build-arg PROJECT_NAME=$PROJECT_NAME \
---build-arg SSH_PRIVATE_KEY="$(cat ${ID_RSA_PATH})";
+--build-arg REPOSITORY_URL=$REPOSITORY_URL \
+--build-arg REACT_CONTAINER_PORT=$REACT_CONTAINER_PORT \
+--build-arg SSH_PRIVATE_KEY="$(cat ${ID_RSA_PATH})"
 
+echo "*****************************"
+echo "--END BUILD"
+echo "*****************************"
+
+
+echo "*****************************"
+echo "--RUN IMAGE"
+echo "*****************************"
 # Run Container
 # Bind local machine's port 3001 to container's port 3000
 docker run -it --rm -p $LOCAL_PORT:$REACT_CONTAINER_PORT $IMAGE_NAME
+echo "*****************************"
+echo "--END OF SCRIPT"
+echo "*****************************"
