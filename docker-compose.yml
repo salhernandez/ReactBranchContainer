@@ -1,14 +1,13 @@
 version: '3.7'
 services:
   the_container:
-    image: $IMAGE_NAME # shell export
+    image: ${IMAGE_NAME} # shell export
     build:
       context: ./
       dockerfile: .Dockerfile
       args:
-        SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY} # --build-arg
         BRANCH_NAME: ${BRANCH_NAME} # --build-arg
         REPOSITORY_URL: ${REPOSITORY_URL} # --build-arg
+        PROJECT_NAME: ${PROJECT_NAME} # --build-arg
+        SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY} # --build-arg
     stdin_open: true
-    ports:
-      - 3001:3000
