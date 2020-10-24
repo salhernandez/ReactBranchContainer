@@ -3,18 +3,22 @@
 # Project Information
 REPOSITORY_URL="git@github.com:salhernandez/test-react.git"
 PROJECT_NAME="test-react"
-BRANCH_NAME="develop"
-REACT_CONTAINER_PORT=3000
+BRANCH_NAME="master"
+
+# default create-react-app port
 LOCAL_PORT=5000
+REACT_CONTAINER_PORT=3000
 
 # path to SSH RSA KEY
 ID_RSA_PATH="/c/Users/Sal/.ssh/id_rsa_hernandezgsal"
 BUILD_CACHE="--no-cache"
 
-# ./run.sh -b <branch_name> 
-while getopts "b:" arg; do
+# ./run.sh -b <branch_name> -p <local_port> -c <react_container_port>
+while getopts ":b:p:c:" arg; do
   case $arg in
     b) BRANCH_NAME=$OPTARG;;
+    p) LOCAL_PORT=$OPTARG;;
+    c) REACT_CONTAINER_PORT=$OPTARG;;
   esac
 done
 
