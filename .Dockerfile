@@ -1,41 +1,46 @@
 FROM node:12.16.1
 
 # Will only be used once
-ARG SSH_PRIVATE_KEY
-ARG BRANCH_NAME
+ARG SSH_PRIVATE_KEY=0
+ARG BRANCH_NAME=0
+ARG REPOSITORY_URL=0
+ARG PROJECT_NAME=0
+ARG REACT_CONTAINER_PORT=1000
+ARG BASE_WORKDIR="/app"
+ARG PROJECT_WORKDIR="${BASE_WORKDIR}/${PROJECT_NAME}"
 
 # Set working directory
-WORKDIR /app
+WORKDIR "${BASE_WORKDIR}"
 
-# setup SSH
+# Setup SSH
 RUN mkdir ~/.ssh/
 RUN echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa
 
-# make sure your domain is accepted
+# Make sure your domain is accepted
 RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN chmod 0600 ~/.ssh/id_rsa
 
 # Clone repository via SSH
-RUN git clone git@github.com:salhernandez/test-react.git
+RUN git clone "${REPOSITORY_URL}"
 
-# Remove SSH KEY
-RUN rm -rf ~/.ssh/
+# Set working directory again, now we're inside the react project itself
+WORKDIR "${PROJECT_WORKDIR}"
 
-# Set working directory
-# Replace test-react with your project's folder
-WORKDIR /app/test-react
-
-# get all branches from remote
+# Get all branches from remote
 RUN git fetch
 
 # Checkout branch
 RUN git checkout "${BRANCH_NAME}"
 
+# Install dependencies
 RUN npm install
 RUN npm install react-scripts
 
-# Uses port which is used by the actual application
-EXPOSE 3000
+# Remove SSH KEY
+RUN rm -rf ~/.ssh/
+
+# Expose port which is used by the actual application
+EXPOSE $REACT_CONTAINER_PORT
 
 # Finally runs the application
 CMD [ "npm", "start" ]
