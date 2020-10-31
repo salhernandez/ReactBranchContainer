@@ -4,13 +4,14 @@
 REPOSITORY_URL="git@github.com:salhernandez/test-react.git"
 PROJECT_NAME="test-react"
 BRANCH_NAME="master"
+NODE_VERSION_REACT_APP="latest"
 
-# default create-react-app port
+# Default create-react-app port
 LOCAL_PORT=5000
 REACT_CONTAINER_PORT=3000
 
-# path to SSH RSA KEY
-ID_RSA_PATH="/c/Users/Sal/.ssh/id_rsa_hernandezgsal"
+# Path to SSH RSA KEY
+ID_RSA_PATH="/mnt/c/Users/Sal/.ssh/id_rsa_hernandezgsal"
 BUILD_CACHE="--no-cache"
 
 # ./run.sh -b <branch_name> -p <local_port> -c <react_container_port>
@@ -24,7 +25,7 @@ done
 
 IMAGE_NAME="${PROJECT_NAME}/${BRANCH_NAME}:latest"
 
-# export variable so that it can be accessed by docker-compose
+# Add environment variable
 export IMAGE_NAME=$IMAGE_NAME
 
 echo "*****************************"
@@ -32,6 +33,7 @@ echo "--VARIABLES"
 echo "*****************************"
 echo Repository: $REPOSITORY_URL
 echo Project: $PROJECT_NAME
+echo Node Environment for React Application: $NODE_VERSION_REACT_APP
 echo Local Port: $LOCAL_PORT
 echo React Container Port: $REACT_CONTAINER_PORT
 echo Branch: $BRANCH_NAME
@@ -43,13 +45,14 @@ echo "*****************************"
 echo "--START BUILD"
 echo "*****************************"
 
-# Build container
+# Build image
 docker-compose build \
 $BUILD_CACHE \
 --build-arg BRANCH_NAME=$BRANCH_NAME \
 --build-arg PROJECT_NAME=$PROJECT_NAME \
 --build-arg REPOSITORY_URL=$REPOSITORY_URL \
 --build-arg REACT_CONTAINER_PORT=$REACT_CONTAINER_PORT \
+--build-arg NODE_VERSION_REACT_APP=$NODE_VERSION_REACT_APP \
 --build-arg SSH_PRIVATE_KEY="$(cat ${ID_RSA_PATH})"
 
 echo "*****************************"
