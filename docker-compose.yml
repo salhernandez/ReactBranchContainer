@@ -10,5 +10,6 @@ services:
         PROJECT_NAME: ${PROJECT_NAME} # --build-arg
         REPOSITORY_URL: ${REPOSITORY_URL} # --build-arg
         REACT_CONTAINER_PORT: ${REACT_CONTAINER_PORT} # --build-arg
+        NODE_VERSION_REACT_APP: ${NODE_VERSION_REACT_APP} # --build-arg
         SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY} # --build-arg
     stdin_open: true
