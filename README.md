@@ -64,6 +64,7 @@ Before using it, you need to update `rbc.sh`  with the proper variables:
 REPOSITORY_URL="git@github.com:salhernandez/test-react.git"
 PROJECT_NAME="test-react"
 BRANCH_NAME="develop"
+NODE_VERSION_REACT_APP="latest"
 
 # default create-react-app port
 REACT_CONTAINER_PORT=3000
