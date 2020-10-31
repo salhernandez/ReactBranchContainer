@@ -1,6 +1,6 @@
 # ReactBranchContainer
 
-When developing a [React](https://reactjs.org/) Application and want to compare the output of the current work with another branch like `develop` on my local I have to go through a series of time-consuming steps to get `develop` branch up and running.
+When developing a [React](https://reactjs.org/) Application and want to compare the output of the current work with another branch like `develop` on my local I have to go through a series of time-consuming steps to get `develop` branch up and running. Because of this, [ReactBranchContainer](https://github.com/salhernandez/ReactBranchContainer) was born.
 
 ## Steps without **ReactBranchContainer**:
 1. Stash local changes with `git stash`
@@ -275,6 +275,10 @@ docker run -it --rm -p $LOCAL_PORT:$REACT_CONTAINER_PORT $IMAGE_NAME
 
 **DO NOT USE THIS TO PUSH AN IMAGE TO DOCKER HUB! If you run `docker history <image_name> --no-trunc`  you will see all the variables passed into the image like your ID_RSA token! This should only be used for development purposes only! More information [here].(https://docs.docker.com/engine/reference/commandline/history/)**
 
+For a more secure way to pass build secret information use [BuildKit](https://github.com/moby/buildkit): [New Docker Build secret information](https://docs.docker.com/develop/develop-images/build_enhancements/#new-docker-build-secret-information)
+
+[BuildKit is still experimental and not supported by Windows](https://github.com/moby/buildkit#quick-start)
+
 # Useful information
 
 Since this will be generating new containers, you will want to clean up intermediate and unused containers every now and then, use the following commands to help you free up some space:
@@ -295,3 +299,9 @@ docker system prune -a
 1. [Docker ARG, ENV and .env - a Complete Guide]([https://link](https://vsupalov.com/docker-arg-env-variable-guide/))
 2. [`getops`](https://linuxconfig.org/how-to-use-getopts-to-parse-a-script-options)
 3. [Access Private Repositories from Your Dockerfile Without Leaving Behind Your SSH Keys](https://vsupalov.com/build-docker-image-clone-private-repo-ssh-key/)
+4. [Fetching private GitHub repos from a Docker container](https://medium.com/paperchain/fetching-private-github-repos-from-a-docker-container-273f25ec5a74)
+
+Checkout the project on [GitHub](https://github.com/salhernandez/ReactBranchContainer).
+
+# Q&A
+What problem did you try to fix with a tool/project because you did not want repeat a series of tasks?
